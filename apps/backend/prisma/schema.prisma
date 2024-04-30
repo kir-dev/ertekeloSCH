@@ -37,3 +37,43 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model SubjectRating {
+  id               Int      @id @default(autoincrement())
+  desc             String
+  isAnon           Boolean
+  difficultyRating Int      @default(0) // Teljesíthetőség
+  interestRating   Int      @default(0) // Érdekesség
+  usefulnessRating Int      @default(0) // Hasznosság
+  // userId
+  // subjectId
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ProfRating {
+  id                 Int      @id @default(autoincrement())
+  desc               String
+  isAnon             Boolean
+  presentationRating Int      @default(0) // Előadásmód
+  knowledgeRating    Int      @default(0) // Tudás
+  helpfulnessRating  Int      @default(0) // Segítőkészség
+  // userId
+  // profId
+  // subjectRatingId
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model SpecRating {
+  id               Int      @id @default(autoincrement())
+  desc             String
+  isAnon           Boolean
+  difficultyRating Int      @default(0) // Teljesíthetőség
+  interestRating   Int      @default(0) // Érdekesség
+  usefulnessRating Int      @default(0) // Hasznosság
+  // specId
+  // userId
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
