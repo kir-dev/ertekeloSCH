@@ -37,3 +37,26 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+enum Title {
+  PROF // Professzor
+  ASSOC_PROF // Docens
+  ASST_PROF // Adjunktus
+  LECTURER // Óraadó
+}
+
+model Prof {
+  id                 String   @id @default(uuid())
+  name               String
+  desc               String?
+  title              Title
+  presentationRating Float    @default(0)
+  knowledgeRating    Float    @default(0)
+  helpfulnessRating  Float    @default(0)
+  pfp                String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  // department *
+  // teacher *
+  // ratings *
+}
