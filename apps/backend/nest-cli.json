@@ -7,6 +7,14 @@
   },
   "compilerOptions": {
     "builder": "swc",
-    "typeCheck": true
+    "typeCheck": true,
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true
+        }
+      }
+    ]
   }
 }
