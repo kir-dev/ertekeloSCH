@@ -28,7 +28,7 @@ enum Major {
 }
 
 model User {
-  authSchId String   @id
+  authSchId String   @id @default(uuid())
   email     String   @unique
   name      String
   role      Role     @default(USER)
