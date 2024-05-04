@@ -114,6 +114,6 @@ model Department {
 model Spec {
   id   Int    @id @default(autoincrement())
   area String
-  //department  Department  //or can be more than one?
+  //department  Department  //? or can be more than one?
   //subjects  Subject[]
 }
