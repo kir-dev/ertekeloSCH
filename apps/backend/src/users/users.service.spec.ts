@@ -1,30 +1,38 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { mockDeep } from 'jest-mock-extended';
 import { PrismaService } from 'nestjs-prisma';
 
 import { CreateUserDto } from './dto/create-use.dto';
-import { User } from './entity/user.entity';
-import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
   let usersService: UsersService;
-  let userModel: User;
-
-  const mockUsersService = {};
+  const mockPrismaService = mockDeep<PrismaService>();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       // TODO - Need to mock the PrismaService
-      providers: [PrismaService, UsersService, { provide: 'UserModel', useValue: userModel }],
-      controllers: [UsersController],
+      providers: [
+        UsersService,
+        {
+          provide: PrismaService,
+          useValue: mockPrismaService,
+        },
+      ],
+      //controllers: [UsersController],
     }).compile();
 
     usersService = module.get<UsersService>(UsersService);
-    userModel = module.get<User>('UserModel');
   });
 
   it('should be defined', () => {
     expect(usersService).toBeDefined();
+  });
+
+  it('should  find all users', async () => {
+    mockPrismaService.user.findMany.mockReturnValueOnce([]);
+    const result = await usersService.findAll();
+    expect(result).toEqual([]);
   });
 
   it('should create a user', async () => {
@@ -37,6 +45,6 @@ describe('UsersService', () => {
     };
 
     const result = await usersService.create(user);
-    expect(result).toEqual(userModel);
+    expect(result).toEqual(user);
   });
 });
