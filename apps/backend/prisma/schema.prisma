@@ -59,6 +59,7 @@ model Prof {
   pfp                String?
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
+  subjects           Subject[]
   // teacher *
   ProfRating         ProfRating[]
   Department         Department?  @relation(fields: [departmentId], references: [id])
@@ -146,4 +147,5 @@ model Subject {
   SubjectRating SubjectRating[]
   Spec          Spec?           @relation(fields: [specId], references: [id])
   specId        Int?
+  Prof          Prof[]
 }
