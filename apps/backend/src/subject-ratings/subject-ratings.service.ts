@@ -10,8 +10,18 @@ export class SubjectRatingsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateSubjectRatingDto): Promise<SubjectRating> {
-    // TODO - also handle the creation of profRating when we have relations
-    return await this.prisma.subjectRating.create({ data });
+    // TODO - get the current logged in user
+    // TODO - throw an error if the user is not logged in
+    return await this.prisma.subjectRating.create({
+      data: {
+        desc: data.desc,
+        isAnon: data.isAnon,
+        difficultyRating: data.difficultyRating,
+        interestRating: data.interestRating,
+        usefulnessRating: data.usefulnessRating,
+        author: { connect: { authSchId: 'please_change_when_we_have_auth' } },
+      },
+    });
   }
 
   async findAll(): Promise<SubjectRating[]> {
@@ -27,6 +37,8 @@ export class SubjectRatingsService {
   }
 
   async update(id: number, data: UpdateSubjectRatingDto): Promise<SubjectRating> {
+    // TODO - throw an error if the user is not logged in
+    // TODO - only an admin or the author can update the subject rating
     try {
       return await this.prisma.subjectRating.update({ where: { id }, data });
     } catch {
@@ -36,6 +48,8 @@ export class SubjectRatingsService {
 
   async remove(id: number): Promise<SubjectRating> {
     try {
+      // TODO - throw an error if the user is not logged in
+      // TODO - only an admin or the author can delete the subject rating
       return await this.prisma.subjectRating.delete({ where: { id } });
     } catch {
       throw new NotFoundException(`SubjectRating with id ${id} not found`);

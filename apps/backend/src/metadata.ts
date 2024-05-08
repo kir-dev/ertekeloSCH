@@ -20,6 +20,8 @@ export default async () => {
               presentationRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
               knowledgeRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
               helpfulnessRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
+              profId: { required: true, type: () => String },
+              subjectRatingId: { required: true, type: () => Number },
               createdAt: { required: true, type: () => Date },
               updatedAt: { required: true, type: () => Date },
             },

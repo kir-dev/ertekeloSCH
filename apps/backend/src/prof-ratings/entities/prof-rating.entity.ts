@@ -34,6 +34,16 @@ export class ProfRating {
   helpfulnessRating: number;
 
   @ApiProperty()
+  @IsString()
+  profId: string;
+
+  @ApiProperty()
+  @IsNumber()
+  // A ProfRating belongs to a SubjectRating, since you cannot rate a professor without rating a subject,
+  // however you can rate more professors for the same subject.
+  subjectRatingId: number;
+
+  @ApiProperty()
   @IsDate()
   createdAt: Date;
 

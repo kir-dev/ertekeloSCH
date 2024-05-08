@@ -76,8 +76,6 @@ model SubjectRating {
   author           User         @relation(fields: [userId], references: [authSchId])
   userId           String
   ProfRating       ProfRating[]
-  Department       Department?  @relation(fields: [departmentId], references: [id])
-  departmentId     Int?
   Subject          Subject?     @relation(fields: [subjectId], references: [id])
   subjectId        Int?
   createdAt        DateTime     @default(now())
@@ -99,8 +97,6 @@ model ProfRating {
   subjectRatingId    Int
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
-  Department         Department?   @relation(fields: [departmentId], references: [id])
-  departmentId       Int?
 }
 
 model SpecRating {
@@ -119,14 +115,12 @@ model SpecRating {
 }
 
 model Department {
-  id               Int             @id @default(autoincrement())
-  name             String
-  desc             String
-  subjectRatings   SubjectRating[]
-  professorRatings ProfRating[]
-  professors       Prof[]
-  subjects         Subject[]
-  Spec             Spec[]
+  id         Int       @id @default(autoincrement())
+  name       String
+  desc       String
+  professors Prof[]
+  subjects   Subject[]
+  Spec       Spec[]
 }
 
 model Spec {
