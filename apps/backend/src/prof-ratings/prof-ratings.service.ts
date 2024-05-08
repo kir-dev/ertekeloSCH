@@ -10,6 +10,7 @@ export class ProfRatingsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: CreateProfRatingDto): Promise<ProfRating> {
+    // TODO - also create the subjectRating when we have relations
     return await this.prisma.profRating.create({ data });
   }
 
@@ -17,7 +18,7 @@ export class ProfRatingsService {
     return await this.prisma.profRating.findMany();
   }
 
-  async findOne(id: number): Promise<ProfRating | null> {
+  async findOne(id: number): Promise<ProfRating> {
     const profRating = await this.prisma.profRating.findUnique({ where: { id } });
     if (!profRating) {
       throw new NotFoundException(`ProfRating with id ${id} not found`);
@@ -25,7 +26,7 @@ export class ProfRatingsService {
     return profRating;
   }
 
-  async update(id: number, data: UpdateProfRatingDto): Promise<ProfRating | null> {
+  async update(id: number, data: UpdateProfRatingDto): Promise<ProfRating> {
     try {
       return await this.prisma.profRating.update({ where: { id }, data });
     } catch {
@@ -33,7 +34,7 @@ export class ProfRatingsService {
     }
   }
 
-  async remove(id: number): Promise<ProfRating | null> {
+  async remove(id: number): Promise<ProfRating> {
     try {
       return await this.prisma.profRating.delete({ where: { id } });
     } catch {

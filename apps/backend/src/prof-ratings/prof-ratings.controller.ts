@@ -20,20 +20,17 @@ export class ProfRatingsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<ProfRating | null> {
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<ProfRating> {
     return this.profRatingsService.findOne(id);
   }
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateProfRatingDto: UpdateProfRatingDto
-  ): Promise<ProfRating | null> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateProfRatingDto: UpdateProfRatingDto): Promise<ProfRating> {
     return this.profRatingsService.update(id, updateProfRatingDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<ProfRating | null> {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<ProfRating> {
     return this.profRatingsService.remove(id);
   }
 }

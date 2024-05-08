@@ -1,15 +1,32 @@
 /* eslint-disable */
 export default async () => {
   const t = {
+    ['./prof-ratings/entities/prof-rating.entity']: await import('./prof-ratings/entities/prof-rating.entity'),
     ['./subject-ratings/entities/subject-rating.entity']: await import(
       './subject-ratings/entities/subject-rating.entity'
     ),
     ['./users/entity/user.entity']: await import('./users/entity/user.entity'),
-    ['./prof-ratings/entities/prof-rating.entity']: await import('./prof-ratings/entities/prof-rating.entity'),
   };
   return {
     '@nestjs/swagger': {
       models: [
+        [
+          import('./prof-ratings/entities/prof-rating.entity'),
+          {
+            ProfRating: {
+              id: { required: true, type: () => Number },
+              desc: { required: true, type: () => String },
+              isAnon: { required: true, type: () => Boolean },
+              presentationRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
+              knowledgeRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
+              helpfulnessRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
+              createdAt: { required: true, type: () => Date },
+              updatedAt: { required: true, type: () => Date },
+            },
+          },
+        ],
+        [import('./prof-ratings/dto/create-prof-rating.dto'), { CreateProfRatingDto: {} }],
+        [import('./prof-ratings/dto/update-prof-rating.dto'), { UpdateProfRatingDto: {} }],
         [
           import('./subject-ratings/entities/subject-rating.entity'),
           {
@@ -44,26 +61,21 @@ export default async () => {
         ],
         [import('./users/dto/create-use.dto'), { CreateUserDto: {} }],
         [import('./users/dto/update-user.dto'), { UpdateUserDto: {} }],
-        [
-          import('./prof-ratings/entities/prof-rating.entity'),
-          {
-            ProfRating: {
-              id: { required: true, type: () => Number },
-              desc: { required: true, type: () => String },
-              isAnon: { required: true, type: () => Boolean },
-              presentationRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
-              knowledgeRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
-              helpfulnessRating: { required: true, type: () => Number, minimum: 1, maximum: 5 },
-              createdAt: { required: true, type: () => Date },
-              updatedAt: { required: true, type: () => Date },
-            },
-          },
-        ],
-        [import('./prof-ratings/dto/create-prof-rating.dto'), { CreateProfRatingDto: {} }],
-        [import('./prof-ratings/dto/update-prof-rating.dto'), { UpdateProfRatingDto: {} }],
       ],
       controllers: [
         [import('./app.controller'), { AppController: { getHello: { type: String } } }],
+        [
+          import('./prof-ratings/prof-ratings.controller'),
+          {
+            ProfRatingsController: {
+              create: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
+              findAll: { type: [t['./prof-ratings/entities/prof-rating.entity'].ProfRating] },
+              findOne: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
+              update: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
+              remove: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
+            },
+          },
+        ],
         [
           import('./subject-ratings/subject-ratings.controller'),
           {
@@ -85,18 +97,6 @@ export default async () => {
               findOne: { type: t['./users/entity/user.entity'].User },
               update: { type: t['./users/entity/user.entity'].User },
               remove: { type: t['./users/entity/user.entity'].User },
-            },
-          },
-        ],
-        [
-          import('./prof-ratings/prof-ratings.controller'),
-          {
-            ProfRatingsController: {
-              create: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
-              findAll: { type: [t['./prof-ratings/entities/prof-rating.entity'].ProfRating] },
-              findOne: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
-              update: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
-              remove: { type: t['./prof-ratings/entities/prof-rating.entity'].ProfRating },
             },
           },
         ],

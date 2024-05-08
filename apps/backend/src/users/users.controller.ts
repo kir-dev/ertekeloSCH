@@ -20,17 +20,17 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<User | null> {
+  findOne(@Param('id') id: string): Promise<User> {
     return this.usersService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User | null> {
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<User | null> {
+  remove(@Param('id') id: string): Promise<User> {
     return this.usersService.remove(id);
   }
 }

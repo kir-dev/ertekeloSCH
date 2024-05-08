@@ -20,17 +20,17 @@ export class SubjectRatingsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<SubjectRating | null> {
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<SubjectRating> {
     return this.subjectRatingsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateSubjectRatingDto): Promise<SubjectRating | null> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateSubjectRatingDto): Promise<SubjectRating> {
     return this.subjectRatingsService.update(id, data);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<SubjectRating | null> {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<SubjectRating> {
     return this.subjectRatingsService.remove(id);
   }
 }
