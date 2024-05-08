@@ -28,16 +28,18 @@ enum Major {
 }
 
 model User {
-  authSchId String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  role      Role     @default(USER)
-  major     Major
-  desc      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  authSchId     String          @id @default(uuid())
+  email         String          @unique
+  name          String
+  role          Role            @default(USER)
+  major         Major
+  desc          String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  ProfRating    ProfRating[]
+  SpecRating    SpecRating[]
+  SubjectRating SubjectRating[]
 }
-
 
 enum Title {
   PROF // Professzor
@@ -47,46 +49,58 @@ enum Title {
 }
 
 model Prof {
-  id                 String   @id @default(uuid())
+  id                 String       @id @default(uuid())
   name               String
   desc               String?
   title              Title
-  presentationRating Float    @default(0)
-  knowledgeRating    Float    @default(0)
-  helpfulnessRating  Float    @default(0)
+  presentationRating Float        @default(0)
+  knowledgeRating    Float        @default(0)
+  helpfulnessRating  Float        @default(0)
   pfp                String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  // department *
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  subjects           Subject[]
   // teacher *
-  // ratings *
+  ProfRating         ProfRating[]
+  Department         Department?  @relation(fields: [departmentId], references: [id])
+  departmentId       Int?
 }
 
 model SubjectRating {
-  id               Int      @id @default(autoincrement())
+  id               Int          @id @default(autoincrement())
   desc             String
   isAnon           Boolean
-  difficultyRating Int      @default(0) // Teljesíthetőség
-  interestRating   Int      @default(0) // Érdekesség
-  usefulnessRating Int      @default(0) // Hasznosság
-  // userId
-  // subjectId
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  difficultyRating Int          @default(0) // Teljesíthetőség
+  interestRating   Int          @default(0) // Érdekesség
+  usefulnessRating Int          @default(0) // Hasznosság
+  author           User         @relation(fields: [userId], references: [authSchId])
+  userId           String
+  ProfRating       ProfRating[]
+  Department       Department?  @relation(fields: [departmentId], references: [id])
+  departmentId     Int?
+  Subject          Subject?     @relation(fields: [subjectId], references: [id])
+  subjectId        Int?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
 }
 
 model ProfRating {
-  id                 Int      @id @default(autoincrement())
+  id                 Int           @id @default(autoincrement())
   desc               String
   isAnon             Boolean
-  presentationRating Int      @default(0) // Előadásmód
-  knowledgeRating    Int      @default(0) // Tudás
-  helpfulnessRating  Int      @default(0) // Segítőkészség
-  // userId
-  // profId
-  // subjectRatingId
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  presentationRating Int           @default(0) // Előadásmód
+  knowledgeRating    Int           @default(0) // Tudás
+  helpfulnessRating  Int           @default(0) // Segítőkészség
+  author             User          @relation(fields: [userId], references: [authSchId])
+  userId             String
+  prof               Prof          @relation(fields: [profId], references: [id])
+  profId             String
+  subjectRating      SubjectRating @relation(fields: [subjectRatingId], references: [id])
+  subjectRatingId    Int
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  Department         Department?   @relation(fields: [departmentId], references: [id])
+  departmentId       Int?
 }
 
 model SpecRating {
@@ -96,8 +110,42 @@ model SpecRating {
   difficultyRating Int      @default(0) // Teljesíthetőség
   interestRating   Int      @default(0) // Érdekesség
   usefulnessRating Int      @default(0) // Hasznosság
-  // specId
-  // userId
+  author           User     @relation(fields: [userId], references: [authSchId])
+  userId           String
+  spec             Spec     @relation(fields: [specId], references: [id])
+  specId           Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model Department {
+  id               Int             @id @default(autoincrement())
+  name             String
+  desc             String
+  subjectRatings   SubjectRating[]
+  professorRatings ProfRating[]
+  professors       Prof[]
+  subjects         Subject[]
+  Spec             Spec[]
+}
+
+model Spec {
+  id           Int          @id @default(autoincrement())
+  area         String
+  department   Department   @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  subjects     Subject[]
+  SpecRating   SpecRating[]
+}
+
+model Subject {
+  id            Int             @id @default(autoincrement())
+  name          String
+  desc          String
+  department    Department      @relation(fields: [departmentId], references: [id])
+  departmentId  Int
+  SubjectRating SubjectRating[]
+  Spec          Spec?           @relation(fields: [specId], references: [id])
+  specId        Int?
+  Prof          Prof[]
 }
