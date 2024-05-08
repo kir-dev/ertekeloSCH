@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateSubjectRatingDto } from './dto/create-subject-rating.dto';
 import { UpdateSubjectRatingDto } from './dto/update-subject-rating.dto';
@@ -6,6 +7,7 @@ import { SubjectRating } from './entities/subject-rating.entity';
 import { SubjectRatingsService } from './subject-ratings.service';
 
 @Controller('subject-ratings')
+@ApiTags('Subject Ratings')
 export class SubjectRatingsController {
   constructor(private readonly subjectRatingsService: SubjectRatingsService) {}
 
