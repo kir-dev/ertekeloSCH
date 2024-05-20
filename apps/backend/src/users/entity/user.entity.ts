@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Major, Role } from '@prisma/client';
-import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class User {
   @IsString()
   authSchId: string;
 
-  @IsString()
-  @IsEmail()
-  email: string;
+  // @IsString()
+  // @IsEmail()
+  // email: string;
 
   @IsString()
   @IsNotEmpty()
@@ -20,11 +20,12 @@ export class User {
 
   @IsEnum(Major)
   @ApiProperty({ enum: Major })
-  major: Major;
+  @IsOptional()
+  major?: Major;
 
   @IsString()
   @IsOptional()
-  desc: string;
+  desc?: string;
 
   @IsDate()
   createdAt: Date;

@@ -28,11 +28,11 @@ enum Major {
 }
 
 model User {
-  authSchId     String          @id @default(uuid())
-  email         String          @unique
+  authSchId     String          @id
+  // email         String          @unique
   name          String
   role          Role            @default(USER)
-  major         Major
+  major         Major?
   desc          String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
