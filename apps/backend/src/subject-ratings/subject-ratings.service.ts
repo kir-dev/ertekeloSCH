@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+import { User } from 'src/users/entity/user.entity';
 
 import { CreateSubjectRatingDto } from './dto/create-subject-rating.dto';
 import { UpdateSubjectRatingDto } from './dto/update-subject-rating.dto';
@@ -9,7 +10,7 @@ import { SubjectRating } from './entities/subject-rating.entity';
 export class SubjectRatingsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateSubjectRatingDto): Promise<SubjectRating> {
+  async create(data: CreateSubjectRatingDto, user: User): Promise<SubjectRating> {
     // TODO - get the current logged in user
     // TODO - throw an error if the user is not logged in
     return await this.prisma.subjectRating.create({
@@ -19,7 +20,7 @@ export class SubjectRatingsService {
         difficultyRating: data.difficultyRating,
         interestRating: data.interestRating,
         usefulnessRating: data.usefulnessRating,
-        author: { connect: { authSchId: 'please_change_when_we_have_auth' } },
+        author: { connect: { authSchId: user.authSchId } },
       },
     });
   }
