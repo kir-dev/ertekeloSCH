@@ -11,8 +11,13 @@ import { Subject } from '@/lib/types';
  * Fetches the list of subjects.
  */
 export async function fetchSubjects(): Promise<Subject[]> {
-  const res = await axios.get<Subject[]>(`${BACKEND_URL}/subjects`);
-  return res.data ?? [];
+  try {
+    const res = await axios.get<Subject[]>(`${BACKEND_URL}/subjects`);
+    return res.data ?? [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
 }
 
 // TODO - Implement searching for subjects by name.
@@ -25,6 +30,11 @@ export async function fetchSubjects(): Promise<Subject[]> {
  * @returns The subject with the given ID.
  */
 export async function fetchSubject(id: string): Promise<Subject | undefined> {
-  const res = await axios.get<Subject>(`${BACKEND_URL}/subjects/${id}`);
-  return res.data;
+  try {
+    const res = await axios.get<Subject>(`${BACKEND_URL}/subjects/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return undefined;
+  }
 }
