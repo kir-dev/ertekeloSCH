@@ -10,12 +10,12 @@ import { SubjectRating } from './entities/subject-rating.entity';
 import { SubjectRatingsService } from './subject-ratings.service';
 
 @Controller('subject-ratings')
-@JwtAuth()
 @ApiTags('Subject Ratings')
 export class SubjectRatingsController {
   constructor(private readonly subjectRatingsService: SubjectRatingsService) {}
 
   @Post()
+  @JwtAuth()
   create(@Body() createSubjectRatingDto: CreateSubjectRatingDto, @CurrentUser() user: User): Promise<SubjectRating> {
     return this.subjectRatingsService.create(createSubjectRatingDto, user);
   }
@@ -31,11 +31,13 @@ export class SubjectRatingsController {
   }
 
   @Patch(':id')
+  @JwtAuth()
   update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateSubjectRatingDto): Promise<SubjectRating> {
     return this.subjectRatingsService.update(id, data);
   }
 
   @Delete(':id')
+  @JwtAuth()
   remove(@Param('id', ParseIntPipe) id: number): Promise<SubjectRating> {
     return this.subjectRatingsService.remove(id);
   }

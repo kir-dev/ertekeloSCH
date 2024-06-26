@@ -7,9 +7,9 @@ import Searchbar from './Searchbar';
 
 export default function Navbar() {
   return (
-    <nav className='p-4 flex justify-between'>
-      <Link href='/'>
-        <h1>ÉrtékelőSCH</h1>
+    <nav className='p-4 flex justify-between bg-primary'>
+      <Link href='/' className='content-center'>
+        <h1 className='text-2xl text-white font-semibold'>ÉrtékelőSCH</h1>
       </Link>
       <Searchbar />
       <Avatar />

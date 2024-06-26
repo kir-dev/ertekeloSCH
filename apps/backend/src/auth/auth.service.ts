@@ -15,7 +15,7 @@ export class AuthService {
     return {
       jwt: this.jwtService.sign(user, {
         secret: process.env.JWT_ACCESSTOKEN_SECRET,
-        expiresIn: process.env.JWT_ACCESSTOKEN_EXPIRES_IN,
+        expiresIn: process.env.JWT_EXPIRES_IN,
       }),
     };
   }
