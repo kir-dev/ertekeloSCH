@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Subject } from '@/lib/types';
 
-export default function SubjectsList({ subjects }: { subjects: Subject[] }) {
-  // TODO - Maybe we should fetch the ratings here?
+import { fetchSubjects } from '../actions';
+
+export default async function SubjectsList() {
+  const subjects = await fetchSubjects();
 
   return (
     <ul>

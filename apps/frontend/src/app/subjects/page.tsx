@@ -1,13 +1,14 @@
-import { fetchSubjects } from './actions';
+import { Suspense } from 'react';
+
 import SubjectsList from './components/SubjectsList';
 
 export default async function SubjectsPage() {
-  const subjects = await fetchSubjects();
-
   return (
-    <main>
-      <h1>Subjects</h1>
-      <SubjectsList subjects={subjects} />
+    <main className='dark:bg-slate-700 min-h-full p-4'>
+      <h1 className='text-xl font-semibold text-black dark:text-white'>Tárgyak</h1>
+      <Suspense fallback={<p className='text-black'>Loading...</p>}>
+        <SubjectsList />
+      </Suspense>
     </main>
   );
 }

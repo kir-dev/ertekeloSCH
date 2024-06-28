@@ -1,0 +1,36 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
+
+import { CreateSubjectDto } from './dto/create-subject.dto';
+import { Subject } from './entities/subject.entity';
+
+@Injectable()
+export class SubjectsService {
+  constructor(private prisma: PrismaService) {}
+
+  async create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
+    return await this.prisma.subject.create({ data: createSubjectDto });
+  }
+
+  async findAll(): Promise<Subject[]> {
+    return await this.prisma.subject.findMany();
+  }
+
+  async findOne(id: number): Promise<Subject | null> {
+    const subject = await this.prisma.subject.findUnique({ where: { id } });
+    if (!subject) {
+      throw new NotFoundException(`Subject with id ${id} not found`);
+    }
+    return subject;
+  }
+
+  async search(query: string): Promise<Subject[]> {
+    return await this.prisma.subject.findMany({
+      where: {
+        name: {
+          search: query,
+        },
+      },
+    });
+  }
+}

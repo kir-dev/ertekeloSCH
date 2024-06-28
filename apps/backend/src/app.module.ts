@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProfRatingsModule } from './prof-ratings/prof-ratings.module';
 import { SubjectRatingsModule } from './subject-ratings/subject-ratings.module';
 import { UsersModule } from './users/users.module';
+import { SubjectsModule } from './subjects/subjects.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module';
     SubjectRatingsModule,
     ProfRatingsModule,
     AuthModule,
+    SubjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
