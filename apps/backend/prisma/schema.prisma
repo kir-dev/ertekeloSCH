@@ -137,6 +137,7 @@ model Subject {
   id            Int             @id @default(autoincrement())
   name          String
   desc          String
+  subjectCode   String
   department    Department      @relation(fields: [departmentId], references: [id])
   departmentId  Int
   SubjectRating SubjectRating[]
