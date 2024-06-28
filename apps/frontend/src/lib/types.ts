@@ -58,3 +58,18 @@ export interface ProfRating {
   createdAt: Date;
   updatedAt: Date;
 }
+
+/**
+ * Represents a simple rating for universal use.
+ */
+export interface SimpleRating {
+  /**
+   * The name of the subject of the rating.
+   */
+  name: string;
+
+  /**
+   * The rating value.
+   */
+  rating: number;
+}

@@ -1,26 +1,27 @@
+import LeaderboardItem from './LeaderboardItem';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 
 export default async function Leaderboard() {
   return (
-    <div className='bg-primary-600 p-4 h-full'>
+    <div className='bg-primary-600 p-4 h-full flex flex-col items-center'>
       <h2 className='text-white font-semibold text-xl'>Toplista</h2>
-      <Carousel>
+      <Carousel className='w-full max-w-xs mt-10'>
         <CarouselContent>
           <CarouselItem>
-            <h3>Professzorok</h3>
+            <LeaderboardItem title='Professzorok' ratings={[{ name: 'Kovács Béla', rating: 100 }]} />
           </CarouselItem>
           <CarouselItem>
-            <h3>Tárgyak</h3>
+            <LeaderboardItem title='Tárgyak' ratings={[{ name: 'Kovács Béla', rating: 100 }]} />
           </CarouselItem>
           <CarouselItem>
-            <h3>Tanszékek</h3>
+            <LeaderboardItem title='Tanszékek' ratings={[{ name: 'Kovács Béla', rating: 100 }]} />
           </CarouselItem>
           <CarouselItem>
-            <h3>Specializációk</h3>
+            <LeaderboardItem title='Specializációk' ratings={[{ name: 'Kovács Béla', rating: 100 }]} />
           </CarouselItem>
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className='bg-primary' />
+        <CarouselNext className='bg-primary' />
       </Carousel>
     </div>
   );
