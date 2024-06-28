@@ -134,14 +134,17 @@ model Spec {
 }
 
 model Subject {
-  id            Int             @id @default(autoincrement())
-  name          String
-  desc          String
-  subjectCode   String
-  department    Department      @relation(fields: [departmentId], references: [id])
-  departmentId  Int
-  SubjectRating SubjectRating[]
-  Spec          Spec?           @relation(fields: [specId], references: [id])
-  specId        Int?
-  Prof          Prof[]
+  id               Int             @id @default(autoincrement())
+  name             String
+  desc             String
+  subjectCode      String
+  difficultyRating Int             @default(0) // Teljesíthetőség
+  interestRating   Int             @default(0) // Érdekesség
+  usefulnessRating Int             @default(0) //
+  department       Department      @relation(fields: [departmentId], references: [id])
+  departmentId     Int
+  SubjectRating    SubjectRating[]
+  Spec             Spec?           @relation(fields: [specId], references: [id])
+  specId           Int?
+  Prof             Prof[]
 }
