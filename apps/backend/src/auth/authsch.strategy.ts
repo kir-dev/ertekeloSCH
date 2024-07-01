@@ -5,7 +5,7 @@ import { Strategy } from 'passport-oauth2';
 import { firstValueFrom } from 'rxjs';
 
 import { AuthService } from './auth.service';
-import { OAuthUser } from './oauthuser';
+import { OAuthUser } from './OauthUser';
 
 const AUTHSCH_HOST = 'https://auth.sch.bme.hu';
 
