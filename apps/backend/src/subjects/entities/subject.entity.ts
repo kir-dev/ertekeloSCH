@@ -10,6 +10,9 @@ export class Subject {
   @IsString()
   desc: string;
 
+  @IsString()
+  subjectCode: string;
+
   @IsNumber()
   departmentId: number;
 

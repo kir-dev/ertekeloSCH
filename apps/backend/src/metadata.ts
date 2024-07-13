@@ -70,6 +70,7 @@ export default async () => {
               id: { required: true, type: () => Number },
               name: { required: true, type: () => String },
               desc: { required: true, type: () => String },
+              subjectCode: { required: true, type: () => String },
               departmentId: { required: true, type: () => Number },
               specId: { required: false, type: () => Number },
             },

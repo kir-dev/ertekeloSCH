@@ -9,7 +9,14 @@ export class SubjectsService {
   constructor(private prisma: PrismaService) {}
 
   async create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
-    return await this.prisma.subject.create({ data: createSubjectDto });
+    return await this.prisma.subject.create({
+      data: {
+        name: createSubjectDto.name,
+        subjectCode: createSubjectDto.subjectCode,
+        desc: createSubjectDto.desc,
+        department: { connect: { id: createSubjectDto.departmentId } },
+      },
+    });
   }
 
   async findAll(): Promise<Subject[]> {

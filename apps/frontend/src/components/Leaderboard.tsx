@@ -3,7 +3,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 export default async function Leaderboard() {
   return (
-    <div className='bg-primary-600 p-4 h-full flex flex-col items-center'>
+    <div className='bg-primary-600 p-4 flex flex-col flex-1 items-center'>
       <h2 className='text-white font-semibold text-xl'>Toplista</h2>
       <Carousel className='w-full max-w-xs mt-10'>
         <CarouselContent>

@@ -4,6 +4,9 @@ export interface Subject {
   desc: string;
   departmentId: number;
   specId: number;
+  difficultyRating: number;
+  interestRating: number;
+  usefulnessRating: number;
 }
 
 export enum Title {
