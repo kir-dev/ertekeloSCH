@@ -1,9 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Subject } from '@/lib/types';
 
-import { fetchSubjects } from '../actions';
+import { fetchSubjects, searchSubjects } from '../actions';
 
-export default async function SubjectsList() {
-  const subjects = await fetchSubjects();
+interface SubjectListProps {
+  query: string;
+}
+
+export default async function SubjectsList({ query }: SubjectListProps) {
+  let subjects: Subject[] = [];
+  if (query === '') {
+    subjects = await fetchSubjects();
+  } else {
+    subjects = await searchSubjects(query);
+  }
 
   return (
     <ul className='flex flex-col gap-4 lg:grid lg:grid-cols-2'>

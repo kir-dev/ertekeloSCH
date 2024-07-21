@@ -1,18 +1,14 @@
 'use server';
 
-import axios from 'axios';
-
-import { BACKEND_URL } from '@/lib/constants';
+import axios from '@/lib/axios';
 import { Subject } from '@/lib/types';
-
-// TODO - Configure axios to have BACKEND_URL as the base URL.
 
 /**
  * Fetches the list of subjects.
  */
 export async function fetchSubjects(): Promise<Subject[]> {
   try {
-    const res = await axios.get<Subject[]>(`${BACKEND_URL}/subjects`);
+    const res = await axios.get<Subject[]>('/subjects');
     return res.data ?? [];
   } catch (err) {
     console.error(err);
@@ -20,7 +16,20 @@ export async function fetchSubjects(): Promise<Subject[]> {
   }
 }
 
-// TODO - Implement searching for subjects by name.
+/**
+ * Fetches the list of subjects that match the given search query.
+ *
+ * @param query The search query to match subjects against.
+ */
+export async function searchSubjects(query: string): Promise<Subject[]> {
+  try {
+    const res = await axios.get<Subject[]>(`/subjects/search?query=${query}`);
+    return res.data ?? [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
 
 // TODO - This might have to return the SubjectRatings as well
 /**
@@ -31,7 +40,7 @@ export async function fetchSubjects(): Promise<Subject[]> {
  */
 export async function fetchSubject(id: string): Promise<Subject | undefined> {
   try {
-    const res = await axios.get<Subject>(`${BACKEND_URL}/subjects/${id}`);
+    const res = await axios.get<Subject>(`/subjects/${id}`);
     return res.data;
   } catch (err) {
     console.error(err);

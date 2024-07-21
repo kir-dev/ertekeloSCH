@@ -3,7 +3,6 @@
 import Link from 'next/link';
 
 import Avatar from './Avatar';
-import Searchbar from './Searchbar';
 
 export default function Navbar() {
   return (
@@ -11,7 +10,6 @@ export default function Navbar() {
       <Link href='/' className='content-center'>
         <h1 className='text-2xl text-white font-semibold'>ÉrtékelőSCH</h1>
       </Link>
-      <Searchbar />
       <Avatar />
     </nav>
   );
