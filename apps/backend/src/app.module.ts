@@ -7,8 +7,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ProfRatingsModule } from './prof-ratings/prof-ratings.module';
 import { SubjectRatingsModule } from './subject-ratings/subject-ratings.module';
-import { UsersModule } from './users/users.module';
 import { SubjectsModule } from './subjects/subjects.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [

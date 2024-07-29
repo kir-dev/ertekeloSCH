@@ -1,3 +1,5 @@
+/* eslint-disable simple-import-sort/exports */
+/* eslint-disable react/prop-types */
 'use client';
 
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
@@ -221,6 +223,6 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
     );
   }
 );
-CarouselNext.displayName = 'CarouselNext';
 
+CarouselNext.displayName = 'CarouselNext';
 export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi };
