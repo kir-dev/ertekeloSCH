@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 
 import Searchbar from '@/components/Searchbar';
-
-import SubjectsList from './components/SubjectsList';
+import SubjectsList from '@/components/subjects/SubjectsList';
 
 export default async function SubjectsPage({ searchParams }: { searchParams?: { query?: string } }) {
   const query = searchParams?.query || '';

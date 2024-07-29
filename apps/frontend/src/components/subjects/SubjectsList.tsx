@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { fetchSubjects, searchSubjects } from '@/lib/actions/subjects';
 import { Subject } from '@/lib/types';
-
-import { fetchSubjects, searchSubjects } from '../actions';
 
 interface SubjectListProps {
   query: string;

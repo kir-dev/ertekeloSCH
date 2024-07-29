@@ -23,7 +23,7 @@ export class SubjectsService {
     return await this.prisma.subject.findMany();
   }
 
-  async findOne(id: number): Promise<Subject | null> {
+  async findOne(id: number): Promise<Subject> {
     const subject = await this.prisma.subject.findUnique({ where: { id } });
     if (!subject) {
       throw new NotFoundException(`Subject with id ${id} not found`);
@@ -33,9 +33,16 @@ export class SubjectsService {
 
   async search(query: string): Promise<Subject[]> {
     return await this.prisma.subject.findMany({
-      where: {
-        name: {
-          search: query,
+      // where: {
+      //   name: {
+      //     search: query,
+      //   },
+      // },
+      orderBy: {
+        _relevance: {
+          fields: ['name'],
+          search: query.replace(/[\s\n\t]/g, '_'),
+          sort: 'asc',
         },
       },
     });

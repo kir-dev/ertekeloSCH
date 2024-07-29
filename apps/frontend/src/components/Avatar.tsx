@@ -10,9 +10,6 @@ export default function Avatar() {
   // Maybe we could use shadcn's Avatar component here
 
   const loggedIn = false;
-  const user = {
-    pfp: 'https://www.link-to-your-avatar.com/avatar.png',
-  };
 
   if (!loggedIn) {
     return (
@@ -30,7 +27,7 @@ export default function Avatar() {
   return (
     <Image
       onClick={() => router.push('/profile')}
-      src={user.pfp}
+      src={placeholderProfilePic}
       alt='Profile picture'
       width={40}
       height={40}
