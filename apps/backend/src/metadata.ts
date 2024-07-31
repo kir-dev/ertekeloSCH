@@ -6,6 +6,7 @@ export default async () => {
     ['./subject-ratings/entities/subject-rating.entity']: await import(
       './subject-ratings/entities/subject-rating.entity'
     ),
+    ['./subjects/entities/subject.entity']: await import('./subjects/entities/subject.entity'),
   };
   return {
     '@nestjs/swagger': {
@@ -62,6 +63,21 @@ export default async () => {
         ],
         [import('./subject-ratings/dto/create-subject-rating.dto'), { CreateSubjectRatingDto: {} }],
         [import('./subject-ratings/dto/update-subject-rating.dto'), { UpdateSubjectRatingDto: {} }],
+        [
+          import('./subjects/entities/subject.entity'),
+          {
+            Subject: {
+              id: { required: true, type: () => Number },
+              name: { required: true, type: () => String },
+              desc: { required: true, type: () => String },
+              subjectCode: { required: true, type: () => String },
+              departmentId: { required: true, type: () => Number },
+              specId: { required: false, type: () => Number },
+            },
+          },
+        ],
+        [import('./subjects/dto/create-subject.dto'), { CreateSubjectDto: {} }],
+        [import('./subjects/dto/update-subject.dto'), { UpdateSubjectDto: {} }],
       ],
       controllers: [
         [import('./app.controller'), { AppController: { getHello: { type: String } } }],
@@ -110,6 +126,17 @@ export default async () => {
               findOne: { type: t['./subject-ratings/entities/subject-rating.entity'].SubjectRating },
               update: { type: t['./subject-ratings/entities/subject-rating.entity'].SubjectRating },
               remove: { type: t['./subject-ratings/entities/subject-rating.entity'].SubjectRating },
+            },
+          },
+        ],
+        [
+          import('./subjects/subjects.controller'),
+          {
+            SubjectsController: {
+              create: { type: t['./subjects/entities/subject.entity'].Subject },
+              findAll: { type: [t['./subjects/entities/subject.entity'].Subject] },
+              search: { type: [t['./subjects/entities/subject.entity'].Subject] },
+              findOne: { type: t['./subjects/entities/subject.entity'].Subject },
             },
           },
         ],

@@ -30,7 +30,7 @@ export class AuthschStrategy extends PassportStrategy(Strategy, 'authsch') {
       this.httpService.get<OAuthUser>(`${AUTHSCH_HOST}/api/profile?access_token=${accessToken}`)
     );
     const dbUser = await this.authService.findOrCreateUser(oAuthUser);
-    this.logger.debug(`DbUser in validate${JSON.stringify(dbUser, null, 2)}`);
+    this.logger.debug(`DbUser in validate: ${JSON.stringify(dbUser, null, 2)}`);
     return dbUser;
   }
 }
