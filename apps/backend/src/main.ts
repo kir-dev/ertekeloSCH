@@ -6,6 +6,12 @@ import metadata from './metadata';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: process.env.FRONTEND_HOST,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('ÉrtékelőSch')

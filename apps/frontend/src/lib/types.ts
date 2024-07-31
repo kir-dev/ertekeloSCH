@@ -76,3 +76,14 @@ export interface SimpleRating {
    */
   rating: number;
 }
+export type Profile = {
+  authSchId: string;
+  name: string;
+  role: string;
+  major: string;
+  desc: string;
+  createdAt: Date;
+  updatedAt: Date;
+  iat: number;
+  exp: number;
+};
