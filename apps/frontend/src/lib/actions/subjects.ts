@@ -1,6 +1,6 @@
 'use server';
 
-import axios from '@/lib/axios';
+import { axios } from '@/lib/axios';
 import { Subject } from '@/lib/types';
 
 /**
