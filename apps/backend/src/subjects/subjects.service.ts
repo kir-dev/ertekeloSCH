@@ -1,7 +1,10 @@
+// TODO: Fix the import sort. The imports are sorted one way when running autofix, but when vscode saves, it sorts them another way.
+/* eslint-disable simple-import-sort/imports */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
 import { CreateSubjectDto } from './dto/create-subject.dto';
+import { SubjectWithRatings } from './entities/subject-with-ratings.entity';
 import { Subject } from './entities/subject.entity';
 
 @Injectable()
@@ -19,12 +22,26 @@ export class SubjectsService {
     });
   }
 
-  async findAll(): Promise<Subject[]> {
+  /**
+   * @param includeRatings If true, includes ratings in the response
+   * @returns All subjects
+   */
+  async findAll(includeRatings?: boolean): Promise<Subject[]> {
+    if (includeRatings === true) {
+      return await this.prisma.subject.findMany({
+        include: {
+          ratings: true,
+        },
+      });
+    }
     return await this.prisma.subject.findMany();
   }
 
-  async findOne(id: number): Promise<Subject> {
-    const subject = await this.prisma.subject.findUnique({ where: { id } });
+  async findOne(id: number): Promise<SubjectWithRatings> {
+    const subject = await this.prisma.subject.findUnique({
+      where: { id },
+      include: { ratings: true },
+    });
     if (!subject) {
       throw new NotFoundException(`Subject with id ${id} not found`);
     }

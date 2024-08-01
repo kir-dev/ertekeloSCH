@@ -11,6 +11,9 @@ async function main() {
   await prisma.subject.deleteMany();
   await prisma.subjectRating.deleteMany();
   await prisma.department.deleteMany();
+  await prisma.teaches.deleteMany();
+  await prisma.profRatingVote.deleteMany();
+  await prisma.subjectRatingVote.deleteMany();
 
   const departments: Department[] = [
     { id: 1, name: 'AUT', desc: 'Automatizálási és Alkalmazott Informatikai Tanszék' },
@@ -88,6 +91,29 @@ async function main() {
 
   for (const subject of subjects) {
     await prisma.subject.create({ data: subject });
+  }
+
+  const anal1 = await prisma.subject.findFirst({ where: { subjectCode: 'TE90AX21' } });
+  const anal2 = await prisma.subject.findFirst({ where: { subjectCode: 'TE90AX57' } });
+  const bsz1 = await prisma.subject.findFirst({ where: { subjectCode: 'VISZAA06' } });
+  const bsz2 = await prisma.subject.findFirst({ where: { subjectCode: 'VISZAA04' } });
+  const profs: Prisma.ProfCreateInput[] = [
+    {
+      name: 'Dr. Tasnádi Tamás',
+      title: 'ASST_PROF',
+      department: { connect: { id: 11 } },
+      teaches: { create: [{ subjectId: anal1.id }, { subjectId: anal2.id }] },
+    },
+    {
+      name: 'Dr. Szeszlér Dávid',
+      title: 'ASST_PROF',
+      department: { connect: { id: 7 } },
+      teaches: { create: [{ subjectId: bsz1.id }, { subjectId: bsz2.id }] },
+    },
+  ];
+
+  for (const prof of profs) {
+    await prisma.prof.create({ data: prof });
   }
 }
 

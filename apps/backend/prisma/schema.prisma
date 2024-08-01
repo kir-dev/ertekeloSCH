@@ -29,17 +29,19 @@ enum Major {
 }
 
 model User {
-  authSchId     String          @id
+  authSchId      String              @id
   // email         String          @unique
-  name          String
-  role          Role            @default(USER)
-  major         Major?
-  desc          String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  ProfRating    ProfRating[]
-  SpecRating    SpecRating[]
-  SubjectRating SubjectRating[]
+  name           String
+  role           Role                @default(USER)
+  major          Major?
+  desc           String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  profRatings    ProfRating[]
+  specRatings    SpecRating[]
+  subjectRatings SubjectRating[]
+  SubjectVote    SubjectRatingVote[]
+  ProfRatingVote ProfRatingVote[]
 }
 
 enum Title {
@@ -60,44 +62,45 @@ model Prof {
   pfp                String?
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
-  subjects           Subject[]
-  // teacher *
-  ProfRating         ProfRating[]
-  Department         Department?  @relation(fields: [departmentId], references: [id])
+  profRatings        ProfRating[]
+  department         Department?  @relation(fields: [departmentId], references: [id])
   departmentId       Int?
+  teaches            Teaches[]
 }
 
 model SubjectRating {
-  id               Int          @id @default(autoincrement())
+  id               Int                 @id @default(autoincrement())
   desc             String
   isAnon           Boolean
-  difficultyRating Int          @default(0) // Teljesíthetőség
-  interestRating   Int          @default(0) // Érdekesség
-  usefulnessRating Int          @default(0) // Hasznosság
-  author           User         @relation(fields: [userId], references: [authSchId])
+  difficultyRating Int                 @default(0) // Teljesíthetőség
+  interestRating   Int                 @default(0) // Érdekesség
+  usefulnessRating Int                 @default(0) // Hasznosság
+  author           User                @relation(fields: [userId], references: [authSchId])
   userId           String
-  ProfRating       ProfRating[]
-  Subject          Subject?     @relation(fields: [subjectId], references: [id])
+  profRatings      ProfRating[]
+  subject          Subject?            @relation(fields: [subjectId], references: [id])
   subjectId        Int?
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  votes            SubjectRatingVote[]
 }
 
 model ProfRating {
-  id                 Int           @id @default(autoincrement())
+  id                 Int              @id @default(autoincrement())
   desc               String
   isAnon             Boolean
-  presentationRating Int           @default(0) // Előadásmód
-  knowledgeRating    Int           @default(0) // Tudás
-  helpfulnessRating  Int           @default(0) // Segítőkészség
-  author             User          @relation(fields: [userId], references: [authSchId])
+  presentationRating Int              @default(0) // Előadásmód
+  knowledgeRating    Int              @default(0) // Tudás
+  helpfulnessRating  Int              @default(0) // Segítőkészség
+  author             User             @relation(fields: [userId], references: [authSchId])
   userId             String
-  prof               Prof          @relation(fields: [profId], references: [id])
+  prof               Prof             @relation(fields: [profId], references: [id])
   profId             String
-  subjectRating      SubjectRating @relation(fields: [subjectRatingId], references: [id])
+  subjectRating      SubjectRating    @relation(fields: [subjectRatingId], references: [id])
   subjectRatingId    Int
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  votes              ProfRatingVote[]
 }
 
 model SpecRating {
@@ -121,7 +124,7 @@ model Department {
   desc       String
   professors Prof[]
   subjects   Subject[]
-  Spec       Spec[]
+  specs      Spec[]
 }
 
 model Spec {
@@ -130,21 +133,56 @@ model Spec {
   department   Department   @relation(fields: [departmentId], references: [id])
   departmentId Int
   subjects     Subject[]
-  SpecRating   SpecRating[]
+  ratings      SpecRating[]
 }
 
 model Subject {
-  id               Int             @id @default(autoincrement())
+  id               Int                 @id @default(autoincrement())
   name             String
   desc             String
   subjectCode      String
-  difficultyRating Int             @default(0) // Teljesíthetőség
-  interestRating   Int             @default(0) // Érdekesség
-  usefulnessRating Int             @default(0) //
-  department       Department      @relation(fields: [departmentId], references: [id])
+  difficultyRating Int                 @default(0) // Teljesíthetőség
+  interestRating   Int                 @default(0) // Érdekesség
+  usefulnessRating Int                 @default(0) //
+  department       Department          @relation(fields: [departmentId], references: [id])
   departmentId     Int
-  SubjectRating    SubjectRating[]
-  Spec             Spec?           @relation(fields: [specId], references: [id])
+  ratings          SubjectRating[]
+  spec             Spec?               @relation(fields: [specId], references: [id])
   specId           Int?
-  Prof             Prof[]
+  teaches          Teaches[]
+  votes            SubjectRatingVote[]
+}
+
+model Teaches {
+  id        Int     @id @default(autoincrement())
+  profId    String
+  subjectId Int
+  prof      Prof    @relation(fields: [profId], references: [id])
+  subject   Subject @relation(fields: [subjectId], references: [id])
+
+  @@index([subjectId, profId])
+}
+
+model SubjectRatingVote {
+  id        Int           @id @default(autoincrement())
+  isUpvote  Boolean
+  author    User          @relation(fields: [userId], references: [authSchId])
+  userId    String
+  rating    SubjectRating @relation(fields: [ratingId], references: [id])
+  ratingId  Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  Subject   Subject?      @relation(fields: [subjectId], references: [id])
+  subjectId Int?
+}
+
+model ProfRatingVote {
+  id        Int        @id @default(autoincrement())
+  isUpvote  Boolean
+  author    User       @relation(fields: [userId], references: [authSchId])
+  userId    String
+  rating    ProfRating @relation(fields: [ratingId], references: [id])
+  ratingId  Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
