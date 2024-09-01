@@ -50,15 +50,15 @@ export class SubjectsService {
 
   async search(query: string): Promise<Subject[]> {
     return await this.prisma.subject.findMany({
-      where: {
-        name: {
-          search: query,
-        },
-      },
+      // where: {
+      //   name: {
+      //     search: query,
+      //   },
+      // },
       orderBy: {
         _relevance: {
           fields: ['name'],
-          search: query.replace(/[\s\n\t]/g, '_'),
+          search: query,
           sort: 'asc',
         },
       },
