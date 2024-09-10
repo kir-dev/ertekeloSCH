@@ -31,7 +31,6 @@ export async function searchSubjects(query: string): Promise<Subject[]> {
   }
 }
 
-// TODO - This might have to return the SubjectRatings as well
 /**
  * Fetches a single subject by ID.
  *
