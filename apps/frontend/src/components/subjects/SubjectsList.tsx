@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { fetchSubjects, searchSubjects } from '@/lib/actions/subjects';
 import { Subject } from '@/lib/types';
@@ -19,7 +21,9 @@ export default async function SubjectsList({ query }: SubjectListProps) {
       {subjects.map((subject) => (
         <Card key={subject.id}>
           <CardHeader>
-            <CardTitle className='text-lg'>{subject.name}</CardTitle>
+            <CardTitle className='text-lg'>
+              <Link href={`/subjects/${subject.id}`}>{subject.name}</Link>
+            </CardTitle>
             {/*<CardDescription>{subject.desc}</CardDescription>*/}
           </CardHeader>
           <CardContent className='w-full'>

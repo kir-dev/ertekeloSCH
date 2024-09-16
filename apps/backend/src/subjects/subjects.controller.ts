@@ -1,6 +1,9 @@
+// TODO: Fix the import sort. The imports are sorted one way when running autofix, but when vscode saves, it sorts them another way.
+/* eslint-disable simple-import-sort/imports */
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
 import { CreateSubjectDto } from './dto/create-subject.dto';
+import { SubjectWithRatings } from './entities/subject-with-ratings.entity';
 import { Subject } from './entities/subject.entity';
 import { SubjectsService } from './subjects.service';
 
@@ -14,8 +17,8 @@ export class SubjectsController {
   }
 
   @Get()
-  findAll(): Promise<Subject[]> {
-    return this.subjectsService.findAll();
+  findAll(@Query('ratings') ratings?: boolean): Promise<Subject[]> {
+    return this.subjectsService.findAll(ratings);
   }
 
   @Get('search')
@@ -24,7 +27,7 @@ export class SubjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Subject | null> {
+  findOne(@Param('id') id: string): Promise<SubjectWithRatings | null> {
     return this.subjectsService.findOne(Number(id));
   }
 }

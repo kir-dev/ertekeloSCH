@@ -9,6 +9,10 @@ export interface Subject {
   usefulnessRating: number;
 }
 
+export interface SubjectWithRatings extends Subject {
+  ratings: SubjectRating[];
+}
+
 export enum Title {
   PROF, // Professzor
   ASSOC_PROF, // Docens

@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -32,16 +32,15 @@ export default function Searchbar({ placeholder }: SearchbarProps) {
     router.replace(`${pathname}?${params.toString()}`);
   }
 
+  useEffect(() => {
+    const query = searchParams.get('query');
+    setQuery(query || '');
+  }, [searchParams]);
+
   return (
     <div className='flex w-full max-w-sm items-center space-x-2'>
-      <Input
-        type='text'
-        placeholder={placeholder}
-        defaultValue={searchParams.get('query')?.toString()}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <Button type='submit' variant='secondary' onSubmit={() => handleSearch(query)}>
+      <Input type='text' placeholder={placeholder} value={query} onChange={(e) => setQuery(e.target.value)} />
+      <Button type='submit' variant='default' onClick={() => handleSearch(query)}>
         Keresés
       </Button>
     </div>

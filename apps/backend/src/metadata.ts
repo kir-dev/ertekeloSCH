@@ -1,12 +1,15 @@
 /* eslint-disable */
 export default async () => {
   const t = {
-    ['./users/entity/user.entity']: await import('./users/entity/user.entity'),
-    ['./prof-ratings/entities/prof-rating.entity']: await import('./prof-ratings/entities/prof-rating.entity'),
     ['./subject-ratings/entities/subject-rating.entity']: await import(
       './subject-ratings/entities/subject-rating.entity'
     ),
+    ['./users/entity/user.entity']: await import('./users/entity/user.entity'),
+    ['./prof-ratings/entities/prof-rating.entity']: await import('./prof-ratings/entities/prof-rating.entity'),
     ['./subjects/entities/subject.entity']: await import('./subjects/entities/subject.entity'),
+    ['./subjects/entities/subject-with-ratings.entity']: await import(
+      './subjects/entities/subject-with-ratings.entity'
+    ),
   };
   return {
     '@nestjs/swagger': {
@@ -77,6 +80,17 @@ export default async () => {
           },
         ],
         [import('./subjects/dto/create-subject.dto'), { CreateSubjectDto: {} }],
+        [
+          import('./subjects/entities/subject-with-ratings.entity'),
+          {
+            SubjectWithRatings: {
+              ratings: {
+                required: true,
+                type: () => [t['./subject-ratings/entities/subject-rating.entity'].SubjectRating],
+              },
+            },
+          },
+        ],
         [import('./subjects/dto/update-subject.dto'), { UpdateSubjectDto: {} }],
       ],
       controllers: [
@@ -136,7 +150,7 @@ export default async () => {
               create: { type: t['./subjects/entities/subject.entity'].Subject },
               findAll: { type: [t['./subjects/entities/subject.entity'].Subject] },
               search: { type: [t['./subjects/entities/subject.entity'].Subject] },
-              findOne: { type: t['./subjects/entities/subject.entity'].Subject },
+              findOne: { type: t['./subjects/entities/subject-with-ratings.entity'].SubjectWithRatings },
             },
           },
         ],
